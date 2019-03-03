@@ -1,0 +1,58 @@
+@import '../../../../styles/global';
+
+.NavItem {
+  margin: 10px 0;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+}
+
+.NavItem a {
+  color: $background;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+.NavItem a:hover,
+.NavItem a:active,
+.NavItem a.active {
+  color: $background;
+}
+
+@media (min-width: 500px) {
+  .NavItem {
+    margin: 0;
+    display: flex;
+    height: 100%;
+    width: auto;
+    align-items: center;
+  }
+  
+  .NavItem a {
+    color: $background;
+    height: 100%;
+    padding: 16px 10px;
+    border-bottom: 4px solid transparent;
+  }
+  
+  .NavItem a:hover,
+  .NavItem a:active,
+  .NavItem a.active {
+    position: relative;
+    background-color: $primary;
+    &:after {
+      content:''; 
+      border-radius: 2px;
+      width: 8px;
+      height: 4px; 
+      background: $secondary; 
+      position: absolute; 
+      bottom: -6px;
+      right: 45%;
+    }
+    // border-bottom: 1px solid $secondary;
+    color: $background;
+  }
+}
