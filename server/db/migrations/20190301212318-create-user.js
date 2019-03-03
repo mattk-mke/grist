@@ -20,6 +20,12 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      picture: {
+        type: Sequelize.STRING,
+      },
+      token: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

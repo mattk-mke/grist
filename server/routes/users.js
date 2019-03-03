@@ -5,7 +5,7 @@ const userController = require('../controllers/userController')
 
 router.get('/login', (req, res) => res.redirect('/'));
 router.get('/auth/google', 
-	passport.authenticate('google', { scope: 'email profile' }));
+	passport.authenticate('google', { scope: ['email profile', 'openid'] }));
 router.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	userController.success);
