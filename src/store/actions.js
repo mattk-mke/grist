@@ -31,7 +31,6 @@ export const signIn = (token) => {
 	return dispatch => {
 		dispatch(signInStart());
 		axios.post('/auth/google', {access_token: token}, { headers: { 
-			"Access-Control-Allow-Origin": "*",
 			"access_token": token
 		} })
 		.then( res => {

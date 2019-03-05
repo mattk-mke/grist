@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const createToken = function (auth) {
 	return jwt.sign({
 		id: auth.id
-	}, 'my-secret',
+	}, process.env.JWT_SECRET || 'my-secret',
 		{
 			expiresIn: 60 * 120
 		});
@@ -19,15 +19,12 @@ module.exports = {
     res.redirect("/");
 	},
 	getUser(req, res, next) {
-		console.log('[req.body.token]', req.body.token);
-		console.log('[req.user.token]', req.user.token);
 		if (req.user && req.body.token === req.user.token) {
-			userQueries.getUser(req.user.googleId, (err, user) => {
+			userQueries.getUser(req.user.id, (err, user) => {
 				if (user) {
-					console.log('[backend user]', user);
 					res.send(user)
 				} else {
-					res.status(err.status).end();
+					return res.status(err.status).end();
 				}
 			})
 		} else {
@@ -49,6 +46,26 @@ module.exports = {
 	},
 	sendToken: (req, res) => {
 		res.setHeader('x-auth-token', req.token);
-		return res.status(200).send(JSON.stringify(req.user));
+		return res.status(200).json(req.user);
+	},
+	verifyToken: (req, res, next) => {
+		const token = req.headers['x-auth-token'];
+		jwt.verify(token,
+			process.env.JWT_SECRET || 'my-secret',
+			(err, decoded) => {
+				if (decoded) {
+					userQueries.getUser(decoded.id, (err, user) => {
+						if (user) {
+							req.user = user;
+							next();
+						} else {
+							return res.status(403).end();
+						}
+					})
+				} else {
+					return res.status(403).end();
+				}
+			});
+	
 	}
 }

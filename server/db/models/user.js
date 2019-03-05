@@ -27,7 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     token: {
       type: DataTypes.STRING
-    }
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "standard"
+    },
   }, {});
   User.associate = function(models) {
     // associations can be defined here
