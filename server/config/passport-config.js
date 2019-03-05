@@ -1,53 +1,15 @@
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const User = require("../db/models").User;
 
 module.exports = {
   init(app) {
+    
     app.use(passport.initialize());
     app.use(passport.session());
-    passport.use(new GoogleStrategy({
-      clientID: "632347726974-7i4huihhgbe271hql545uajf2jukag4o.apps.googleusercontent.com",
-      clientSecret: process.env.GOOGLE_CONSUMER_SECRET,
-      callbackURL: `http://localhost:${process.env.PORT || '8080'}/auth/google/callback`
-    },
-      (token, refreshToken, profile, done) => {
-        User.findOne({ where: { googleId: profile.id } })
-        .then( foundUser => {
-          const userDetails = {
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            picture: profile.photos[0].value,
-            token
-          };
-          if (!foundUser) {
-            User.create(userDetails)
-            .then( user => {
-              console.log('[created]');
-              return done(null, user);
-            })
-            .catch( err => {
-              console.log('[model error]', err);        
-              return done(err);
-            });
-          } else {
-            User.update(userDetails, {where: {googleId: profile.id}})
-            .then( user => {
-              console.log('[found and updated]');
-              return done(null, user);
-            })
-            .catch( err => {
-              console.log('[model error]', err);        
-              return done(err);
-            });
-          }
-        })
-        .catch( err => {
-          console.log('[model error]', err);
-        });
-      }
-    ));
+    
+    // const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+    const GoogleStrategy = require("passport-google-token").Strategy;
+
     passport.serializeUser( (user, callback) => {
       callback(null, user);
     });
@@ -60,5 +22,29 @@ module.exports = {
         callback(err);
       });
     });
+    
+
+    passport.use(new GoogleStrategy({
+      clientID: "632347726974-7i4huihhgbe271hql545uajf2jukag4o.apps.googleusercontent.com",
+      clientSecret: process.env.GOOGLE_CONSUMER_SECRET
+    },
+      (token, refreshToken, profile, done) => {
+        User.upsert({
+          googleId: profile.id,
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          picture: profile._json.picture,
+          token
+        }, { where: { googleId: profile.id }, returning: true })
+        .then( user => {
+          console.log('[strategy success]', user[0]);
+          done(null, user[0]);
+        })
+        .catch( err => {
+          console.log('[model error]', err);
+        });
+      }
+    ));
+    
   }
 }

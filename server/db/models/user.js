@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
@@ -33,18 +33,18 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   };
 
-  User.prototype.checkToken = function (inputToken) {
-    return bcrypt.compareSync(inputToken, this.token);
-  }
-  User.hashToken = function (plainTextToken) {
-    return bcrypt.hashSync(plainTextToken, 10);
-  };
+  // User.prototype.checkToken = function (inputToken) {
+  //   return bcrypt.compareSync(inputToken, this.token);
+  // }
+  // User.hashToken = function (plainTextToken) {
+  //   return bcrypt.hashSync(plainTextToken, 10);
+  // };
 
-  User.beforeCreate( (user, options) => {
-    const hashedToken = User.hashToken(user.token)
-    user.token = hashedToken;
-    return user;
-  });
+  // User.beforeCreate( (user, options) => {
+  //   const hashedToken = User.hashToken(user.token)
+  //   user.token = hashedToken;
+  //   return user;
+  // });
 
   return User;
 };

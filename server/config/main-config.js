@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const passportConfig = require("./passport-config");
 
-
 module.exports = {
   init(app, express) {
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
     app.use(session({
       secret: process.env.cookieSecret || "fake cookie secret",
       resave: false,
