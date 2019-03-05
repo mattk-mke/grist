@@ -3,11 +3,11 @@ const router = express.Router();
 const passport = require("passport");
 const userController = require('../controllers/userController')
 
-router.get('/login', (req, res) => res.redirect('/'));
-router.get('/auth/google', 
-	passport.authenticate('google', { scope: 'email profile' }));
-router.get('/auth/google/callback',
-	passport.authenticate('google', { failureRedirect: '/login' }),
-	userController.success);
+router.post('/auth/google',
+	passport.authenticate('google-token', {session: false}),
+	userController.googleAuth,
+	userController.generateToken,
+	userController.sendToken);
 router.get('/signOut', userController.signOut);
+
 module.exports = router;
