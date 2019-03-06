@@ -1,8 +1,8 @@
 const User = require("./models").User;
 
 module.exports = {
-  getUser(googleId, callback) {
-    User.findOne({where: {googleId} })
+  getUser(id, callback) {
+    User.findByPk(id)
     .then( user => {
       callback(null, user);
     })

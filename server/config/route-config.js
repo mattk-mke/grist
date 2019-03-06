@@ -1,9 +1,11 @@
 module.exports = {
   init(app){
-    const userRoutes = require("../routes/users");
     const cors = require('cors');
     const express = require("express");
     const path = require('path');
+
+    const userRoutes = require("../routes/users");
+    const listRoutes = require("../routes/lists");
 
     const corsOptions = {
       origin: true,
@@ -12,9 +14,15 @@ module.exports = {
       exposedHeaders: ['x-auth-token']
     };
     app.use(cors(corsOptions));
+
+    if(process.env.NODE_ENV === "test") {
+      const mockAuth = require("../../spec/support/mock-auth.js");
+      mockAuth.fakeIt(app);
+    }
   
     const clientPath = path.resolve(__dirname, '../../build/'); 
 		app.use(express.static(clientPath));
     app.use(userRoutes);
+    app.use(listRoutes);
   }
 }
