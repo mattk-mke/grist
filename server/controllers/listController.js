@@ -27,7 +27,7 @@ module.exports = {
       let newList = {
         title: req.body.title,
         isGroup: req.body.isGroup,
-        isPublic: false,
+        isPublic: req.body.isPublic,
         userId: req.user.id
       };
       listQueries.addList(newList, (err, list) => {
@@ -56,24 +56,18 @@ module.exports = {
     });
 	},
 	update(req, res, next) {
-    const authorized = new Authorizer(req.user).edit();
-    if (authorized) {
-      let updatedList = {
-        title: req.body.title,
-        isGroup: req.body.isGroup,
-        isPublic: false,
-        userId: req.user.id
-      };
-      listQueries.updateList(req.user, req.body.listId, updatedList, (err, list) => {
-        if (err || list == null) {
-          res.status(500).end();
-        } else {
-          res.json(list);
-        }
-      });
-    } else {
-      res.status(403).end();
-    }
+    let updatedList = {
+      title: req.body.title,
+      isGroup: req.body.isGroup,
+      isPublic: req.body.isPublic
+    };
+    listQueries.updateList(req.user, req.body.listId, updatedList, (err, list) => {
+      if (err || list == null) {
+        res.status(500).end();
+      } else {
+        res.json(list);
+      }
+    });
 	},
 	destroy(req, res, next) {
     listQueries.deleteList(req.user, req.body.id, (err) => {

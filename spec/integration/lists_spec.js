@@ -151,6 +151,34 @@ describe("routes : lists", () => {
       });
     });
 
+    describe("POST /api/lists/update", () => {
+      it("should update a list with the appropriate values", done => {
+        expect(this.anotherList.title).toBe("Another List");
+        axios.post(`${base}/update`, {
+          title: "Better Named List",
+          listId: this.anotherList.id
+        }, { headers: {
+          "x-auth-token": this.token
+        }})
+        .then( res => {
+          List.findByPk(this.anotherList.id)
+          .then( list => {
+            expect(list).not.toBeNull();
+            expect(list.title).toBe("Better Named List");
+            expect(list.isPublic).toBe(false);
+            done();
+          })
+          .catch( err => {
+            expect(err).toBeNull();            
+            done();
+          });
+        })
+        .catch( err => {
+          expect(err).toBeNull();
+        });
+      });
+    });
+
     describe("GET /api/lists?listId=", () => {
       it("should retrieve the specified list", done => {
         axios.get(base, {
