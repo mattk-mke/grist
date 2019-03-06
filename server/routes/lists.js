@@ -13,6 +13,9 @@ router.post('/api/lists/create',
 router.get('/api/lists',
 	userController.verifyToken,
 	listController.get);
+router.post('/api/lists/update',
+	userController.verifyToken,
+	listController.update);
 router.post('/api/lists/destroy',
 	userController.verifyToken,
 	listController.destroy);

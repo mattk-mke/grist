@@ -6,6 +6,7 @@ module.exports = {
 
     const userRoutes = require("../routes/users");
     const listRoutes = require("../routes/lists");
+    const listItemRoutes = require("../routes/listitems");
 
     const corsOptions = {
       origin: true,
@@ -24,5 +25,6 @@ module.exports = {
 		app.use(express.static(clientPath));
     app.use(userRoutes);
     app.use(listRoutes);
+    app.use(listItemRoutes);
   }
 }
