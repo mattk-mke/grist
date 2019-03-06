@@ -1,12 +1,11 @@
+/* eslint-disable no-unused-expressions */
 const sequelize = require("../../server/db/models/index").sequelize;
 const List = require("../../server/db/models").List;
 const User = require("../../server/db/models").User;
 
 describe("List", () => {
   beforeEach(done => {
-    // eslint-disable-next-line no-unused-expressions
     this.list;
-    // eslint-disable-next-line no-unused-expressions
     this.user;
     sequelize.sync({ force: true }).then((res) => {
       User.create({

@@ -10,5 +10,12 @@ router.get('/api/lists/user',
 router.post('/api/lists/create',
 	userController.verifyToken,
 	listController.create);
+router.get('/api/lists',
+	userController.verifyToken,
+	listController.get);
+router.post('/api/lists/destroy',
+	userController.verifyToken,
+	listController.destroy);
+
 
 module.exports = router;

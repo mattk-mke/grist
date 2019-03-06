@@ -3,9 +3,9 @@ const Authorizer = require("../policies/list");
 
 module.exports = {
   getPublicLists(callback) {
-    return List.all({
+    return List.findAll({
       where: {
-        public: true
+        isPublic: true
       }
     })
     .then( lists => {
@@ -37,7 +37,16 @@ module.exports = {
       console.log(err);
       callback(err);
     });
-  },
+	},
+	getList(id, callback) {
+		return List.findByPk(id)
+    .then( list => {
+      callback(null, list);
+    })
+    .catch( err => {
+      callback(err);
+    });
+	},
 	updateList(user, listId, updatedList, callback) {
 		return List.findByPk(listId)
     .then( list => {
@@ -63,23 +72,25 @@ module.exports = {
 			callback(err);
 		});
 	},
-	deleteList(user, listId, callback) {
-    return List.findByPk(listId)
+	deleteList(user, id, callback) {
+    return List.findByPk(id)
     .then( list => {
       if (!list) {
-        return callback("List not found");
+        return callback(404);
       }
-      const authorized = new Authorizer(user, list).update();
+      const authorized = new Authorizer(user, list).destroy();
       if (authorized) {
         list.destroy()
 				.then( () => {
-					callback(null, list);
+					callback(null);
 				})
 				.catch( err => {
 					console.log(err);
 					callback(err);
 				});
-			}
+			} else {
+        return callback(401);
+      }
 		})
 		.catch( err => {
 			console.log(err);

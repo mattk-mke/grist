@@ -5,7 +5,8 @@ module.exports = {
 	publicLists(req, res, next) {
 		listQueries.getPublicLists((err, lists) => {
       if (err) {
-        res.status(err.status).end();
+        console.log(err);
+        res.status(500).end();
       } else {
         res.json(lists);
       }
@@ -41,7 +42,7 @@ module.exports = {
     }
 	},
 	get(req, res, next) {
-    listQueries.getList(req.body.listId, (err, list) => {
+    listQueries.getList(req.query.id, (err, list) => {
       if ( err || list == null) {
         res.status(404).end();
       } else {
@@ -75,7 +76,7 @@ module.exports = {
     }
 	},
 	destroy(req, res, next) {
-    listQueries.deleteList(req, (err) => {
+    listQueries.deleteList(req.user, req.body.id, (err) => {
       if (err) {
         res.status(500).end();
       } else {

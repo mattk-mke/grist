@@ -14,6 +14,11 @@ module.exports = {
       exposedHeaders: ['x-auth-token']
     };
     app.use(cors(corsOptions));
+
+    if(process.env.NODE_ENV === "test") {
+      const mockAuth = require("../../spec/support/mock-auth.js");
+      mockAuth.fakeIt(app);
+    }
   
     const clientPath = path.resolve(__dirname, '../../build/'); 
 		app.use(express.static(clientPath));

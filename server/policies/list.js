@@ -5,23 +5,19 @@ module.exports = class ListPolicy extends ApplicationPolicy {
     if (!this.user) {
       return false;
     } else {
-      return this.record && (this.record.userId == this.user.id);
+      return this.record && (this.record.userId === this.user.id);
     }
   }
 
   show() {
-    if (this.record.private == true) {
+    if (this.record.isPublic === false) {
       return this._isOwner() || this._isAdmin();
     } else {
       return true;
     }
   }
   edit() {
-    if (this.record.private == true) {
-      return this._isOwner() || this._isAdmin();
-    } else {
-      return this.create() && this.record;
-    }
+    return this._isOwner() || this._isAdmin();
   }
   update() {
     return this.edit();

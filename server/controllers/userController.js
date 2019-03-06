@@ -19,7 +19,7 @@ module.exports = {
     res.redirect("/");
 	},
 	getUser(req, res, next) {
-		if (req.user && req.body.token === req.user.token) {
+		if (req.user) {
 			userQueries.getUser(req.user.id, (err, user) => {
 				if (user) {
 					res.send(user)
@@ -33,7 +33,7 @@ module.exports = {
 	},
 	googleAuth: (req, res, next) => {
 		if (!req.user) {
-				return res.send(401, 'User Not Authenticated');
+				return res.status(401);
 		}
 		req.auth = {
 				id: req.user.id
@@ -59,11 +59,13 @@ module.exports = {
 							req.user = user;
 							next();
 						} else {
-							return res.status(403).end();
+							req.user = null;
+							next();
 						}
 					})
 				} else {
-					return res.status(403).end();
+					req.user = null;
+					next();
 				}
 			});
 	
