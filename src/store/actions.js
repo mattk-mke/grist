@@ -62,3 +62,10 @@ export const setToken = (token) => {
 		token: token
 	};
 };
+
+export const signOut = () => {
+	window.localStorage.removeItem('jwt'); // remove token from local storage
+	return {
+		type: actionTypes.SIGN_OUT
+	};
+};

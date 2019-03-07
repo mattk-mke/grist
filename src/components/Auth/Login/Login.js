@@ -6,17 +6,6 @@ import * as actions from '../../../store/actions';
 import { Redirect, withRouter } from 'react-router-dom';
 
 class Login extends Component {
-	componentWillMount() {
-		let token = null;
-		// Check for existing token in local storage
-		let jwt = JSON.parse(window.localStorage.getItem("jwt"));
-		if (jwt && new Date(jwt.expiresIn) < new Date()) {
-			window.localStorage.removeItem('jwt'); // remove if expired
-		} else if (jwt && new Date(jwt.expiresIn) > new Date()) {
-			token = jwt.token;
-		}
-		if (token) { this.props.signIn(token); }
-	}
 
 	googleResponse = (res) => {
 		this.props.signIn(res.accessToken);

@@ -20,7 +20,9 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.SIGN_IN_FAIL:
 			return updateObject(state, {error: action.error, isAuthenticated: false})
 		case actionTypes.SET_TOKEN:
-			return updateObject(state, {token: action.token})
+			return updateObject(state, {token: action.token});
+		case actionTypes.SIGN_OUT:
+			return updateObject(state, {profile: null, token: null, isAuthenticated: false});
 		default:
 			return state;
 	}
