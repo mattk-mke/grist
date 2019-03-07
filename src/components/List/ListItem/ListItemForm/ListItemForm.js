@@ -67,25 +67,30 @@ class ListItemForm extends Component {
 	render() {
 		return (
 			<div>
-				<h3>{this.props.inline ? null : "Add Item"}</h3>
-				<form onSubmit={this.props.inline ? this.submitUpdateHandler : this.submitCreateHandler}>
-					<div>
-						<input type="text" name="title"
-							placeholder="Item title"
-							value={this.state.form.title}
-							onChange={this.inputChangeHandler} />
-					</div>
-					<div>
-						<label>
+				<h3 className="subtitle has-text-weight-bold">{this.props.inline ? null : "Add Item"}</h3>
+				<form className="columns is-centered" onSubmit={this.props.inline ? this.submitUpdateHandler : this.submitCreateHandler}>
+					<div className="field has-addons">
+						<div className="control">
+							<input className="input is-small" type="text" name="title"
+								placeholder="Item title"
+								value={this.state.form.title}
+								onChange={this.inputChangeHandler} />
+						</div>
+						<label className="control">
 							Priority:
-							<select name="priority" value={this.state.form.priority} onChange={this.inputChangeHandler}>
-								<option value="low">Low</option>
-								<option value="medium">Medium</option>
-								<option value="high">High</option>
-							</select>
+							<div className="select is-small">
+								<select name="priority" value={this.state.form.priority} onChange={this.inputChangeHandler}>
+									<option value="low">Low</option>
+									<option value="medium">Medium</option>
+									<option value="high">High</option>
+								</select>
+							</div>
 						</label>
 					</div>
-					<input type="submit" disabled={this.state.form.title.length < 1} />
+					<div className="field has-addons">
+						{this.props.inline ? <button className="control button is-danger is-small" onClick={this.props.editToggle}>Cancel</button> : null }
+						<input className="control button is-success is-small" type="submit" disabled={this.state.form.title.length < 1} />
+					</div>
 				</form>
 			</div>
 		);

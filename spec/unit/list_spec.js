@@ -42,7 +42,6 @@ describe("List", () => {
           done();
         })
         .catch(err => {
-          console.log(err);
           done();
         });
     });

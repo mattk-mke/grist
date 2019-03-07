@@ -30,23 +30,34 @@ class ListForm extends Component {
 		.then( res => {
 			this.setState({created: true, newId: res.data.id});
 		})
-		
 	}
 
 
 	render() {
 		let content = (
-			<form onSubmit={this.formSubmitHandler}>
-				<div>
-					<label htmlFor="title">List Title</label>
-					<input type="text" name="title" value={this.state.title} onChange={(e) => this.inputChangeHandler(e)} />
-				</div>
-				<div>
-					<label htmlFor="isPublic">Make public?</label>
-					<input type="checkbox" name="isPublic" checked={this.state.isPublic} onChange={(e) => this.inputChangeHandler(e)} />
-				</div>
-				<input type="submit" disabled={this.state.form.title.length < 1} />
-			</form>
+			<div className="container">
+				<h1 className="title">Create List</h1>
+				<form onSubmit={this.formSubmitHandler}>
+					<div className="field has-addons">
+						<div className="control is-expanded">
+							<input className="input" type="text" name="title" placeholder="List Title" value={this.state.title} onChange={(e) => this.inputChangeHandler(e)} />
+						</div>
+						<div className="control is-expanded button">
+							<div className="control">
+								<label className="checkbox label">
+									<input type="checkbox" name="isPublic" checked={this.state.isPublic} onChange={(e) => this.inputChangeHandler(e)} />
+									Make public?
+								</label>
+							</div>
+							<div className="control">
+							</div>
+						</div>
+					</div>
+					<div className="form">
+							<input className="control button is-dark" type="submit" disabled={this.state.form.title.length < 1} />
+					</div>
+				</form>
+			</div>
 		);
 		
 		if (this.state.created) {
@@ -54,7 +65,7 @@ class ListForm extends Component {
 		}
 
 		return (
-			<div>
+			<div className="section">
 				{content}
 			</div>
 		);

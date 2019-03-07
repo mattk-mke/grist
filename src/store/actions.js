@@ -35,7 +35,6 @@ export const signIn = (token) => {
 		} })
 		.then( res => {
 			const token = res.headers['x-auth-token'];
-			console.log(res.data);
 			if (token) {
 				let expiresIn = new Date(); // Now
 				expiresIn.setDate(expiresIn.getDate() + 15);
@@ -43,13 +42,11 @@ export const signIn = (token) => {
 				window.localStorage.setItem('jwt', JSON.stringify({token: res.data.token, expiresIn})); // save token to local storage
 				dispatch(signInSuccess(res.data));
 			} else {
-				console.log('[failed action]')
 				dispatch(signInFail(res.status));
 			}
 			dispatch(signInEnd());
 		})
 	.catch( err => {
-			console.log(err);
 			dispatch(signInFail(err));
 			dispatch(signInEnd());
 		});

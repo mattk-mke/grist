@@ -71,26 +71,26 @@ class List extends Component {
 		let content = <Spinner />;
 		if (!this.state.loading && this.state.list) {
 			content = (
-				<>
-					<h1>{this.state.list.title}</h1>
-					<ul>
+				<div className="container box">
+					<h1 className="title">{this.state.list.title}</h1>
+					<div className="container">
 					{this.state.list.listItems.map( listItem => (
 						<ListItem key={listItem.id}
 							listItem={listItem}
 							token={this.props.token}
 							getListData={this.getListData}
 							editItem={this.editItemToggle}
-							editing={this.state.editing == listItem.id} />
+							editing={this.state.editing === listItem.id} />
 						))}
-						<ListItemForm listId={this.state.list.id}
+						{this.props.isAuthenticated ? <ListItemForm listId={this.state.list.id}
 							reload={this.getListData}
-							token={this.props.token} />
-					</ul>
-				</>
+							token={this.props.token} /> : null }
+					</div>
+				</div>
 			);
 		}
 		return (
-			<div>
+			<div className="section">
 				{content}
 			</div>
 		);
@@ -100,7 +100,8 @@ class List extends Component {
 const mapStateToProps = (state) => {
 	return {
 		token: state.token,
-		loading: state.loading
+		loading: state.loading,
+		isAuthenticated: state.isAuthenticated
 	}
 }
 
