@@ -9,7 +9,7 @@ const navBar = (props) => (
 		<Logo height='60%' />
 		<BurgerToggle clicked={props.opened} />
 		<nav className={classes.DesktopOnly}>
-			<NavItems />
+			<NavItems closed={props.closed} />
 		</nav>
 	</header>
 );

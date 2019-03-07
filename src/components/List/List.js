@@ -12,7 +12,8 @@ class List extends Component {
 		list: null,
 		error: null,
 		isAuthed: false,
-		loading: true
+		loading: true,
+		editing: null
 	}
 
 	getListData() {
@@ -32,6 +33,10 @@ class List extends Component {
 				this.setState({error: err, loading: false});
 			});
 		}
+	}
+
+	editItemToggle = (id) => {
+		this.setState({editing: id})
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -68,16 +73,19 @@ class List extends Component {
 			content = (
 				<>
 					<h1>{this.state.list.title}</h1>
-						<ul>
+					<ul>
 					{this.state.list.listItems.map( listItem => (
 						<ListItem key={listItem.id}
 							listItem={listItem}
+							token={this.props.token}
+							getListData={this.getListData}
+							editItem={this.editItemToggle}
+							editing={this.state.editing == listItem.id} />
+						))}
+						<ListItemForm listId={this.state.list.id}
+							reload={this.getListData}
 							token={this.props.token} />
-					))}
 					</ul>
-					<ListItemForm listId={this.state.list.id}
-						reload={this.getListData}
-						token={this.props.token} />
 				</>
 			);
 		}

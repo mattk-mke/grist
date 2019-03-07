@@ -17,7 +17,7 @@ class ListItemForm extends Component {
 		});
 	}
 
-	formSubmitHandler = (e) => {
+	submitCreateHandler = (e) => {
 		e.preventDefault();
 		axios.post('/listitems/create', {
 			...this.state.form, listId: this.props.listId
@@ -33,14 +33,42 @@ class ListItemForm extends Component {
 		.catch( err => {
 			this.setState({error: err});
 		})
-		
+	}
+
+	submitUpdateHandler = (e) => {
+		e.preventDefault();
+		axios.post('/listitems/update', {
+			...this.state.form, id: this.props.item.id
+		}, {
+			headers: {
+				"x-auth-token": this.props.token
+			}
+		})
+		.then( res => {
+			console.log(res.data);
+			this.props.editToggle();
+			this.setState({form: {title: '', priority: "medium"} });
+		})
+		.catch( err => {
+			this.setState({error: err});
+		})
+	}
+
+	componentDidMount() {
+		if (this.props.inline) {
+			this.setState({form: {
+				title: this.props.item.title,
+				priority: this.props.item.priority
+			}})
+		}
 	}
 
 
 	render() {
 		return (
 			<div>
-				<form onSubmit={this.formSubmitHandler}>
+				<h3>{this.props.inline ? null : "Add Item"}</h3>
+				<form onSubmit={this.props.inline ? this.submitUpdateHandler : this.submitCreateHandler}>
 					<div>
 						<input type="text" name="title"
 							placeholder="Item title"
