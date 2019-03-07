@@ -34,23 +34,25 @@ For front-end, I ran out of time to refine it into what I had imagined. I placed
 
 1. Clone repo
 
-2. Create local PostgreSQL database:
+2. Create ".env" file at root and add config variables (sent in email)
+
+3. Create local PostgreSQL database:
 
 `createdb -U postgres -w grist-dev`
 
 `createdb -U postgres -w grist-test`
 
-3. Migrate databases
+4. Migrate databases
 
 `sequelize db:migrate && sequelize db:migrate`
 `sequelize db:migrate --env=test && sequelize db:migrate --env=test`
 
-4. Start servers
+5. Start servers
 
 `yarn start-server`
 `yarn start`
 
-5. Run tests?
+6. Run tests?
 
 `yarn test`
 
