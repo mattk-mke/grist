@@ -4,14 +4,14 @@ import classes from './NavItems.module.scss';
 import NavItem from './NavItem/NavItem';
 
 const navItems = (props) => {
-  let logInOut = <NavItem link="/login" >Log in</NavItem> ;
+  let logInOut = <NavItem link="/login" closed={props.closed} >Log in</NavItem> ;
   if (props.isAuthenticated) {
-    logInOut = <NavItem link="/logout" >Log Out</NavItem> ;
+    logInOut = <NavItem link="/logout" closed={props.closed} >Log Out</NavItem> ;
   }
 
   return (
-    <ul className={classes.NavItems}>
-      <NavItem link="/" >Home / List</NavItem>
+    <ul className={classes.NavItems} >
+      <NavItem link="/" closed={props.closed}>Home | Lists</NavItem>
       {logInOut}
     </ul>
   );

@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions';
+
+import Lists from '../Lists/Lists';
+import ListForm from '../../components/List/ListForm/ListForm';
 
 class Landing extends Component {
 
 	
 	render() {
+		let content = (<>
+			<h2>Shopping made</h2>
+			<h2>simple!</h2>
+		</>);
+		if (this.props.isAuthenticated) {
+			content = (<>
+					<div>
+						<Lists listType="user" header="My Lists" />
+						<Lists listType="public" header="Public Lists"/>
+					</div>
+					<div>
+						<ListForm />
+					</div>
+			</>);
+		}
+
 		return (
 			<div>
-				<h2>Shopping made</h2>
-				<h2>simple!</h2>
+				{content}
 			</div>
 		);
 	}
@@ -17,14 +34,8 @@ class Landing extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		token: state.token
+		isAuthenticated: state.isAuthenticated
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setToken: (token) => dispatch(actions.setToken(token))
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Landing);
+export default connect(mapStateToProps)(Landing);

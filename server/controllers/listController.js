@@ -1,5 +1,14 @@
 const listQueries = require('../db/queries.lists');
 const Authorizer = require('../policies/list');
+const Pusher = require('pusher');
+
+const pusher = new Pusher({
+	appId: '727497',
+	key: process.env.PUSHER_KEY,
+	secret: process.env.PUSHER_SECRET,
+	cluster: 'us2',
+	encrypted: true
+});
 
 module.exports = {
 	publicLists(req, res, next) {
@@ -34,6 +43,7 @@ module.exports = {
         if (err) {
           res.status(500).end();
         } else {
+          pusher.trigger('list', 'lists', {message: "List successfully created."});
           res.json(list);
         }
       });
@@ -66,6 +76,7 @@ module.exports = {
       if (err || list == null) {
         res.status(500).end();
       } else {
+        pusher.trigger('list', 'lists', {message: "List successfully updated."});
         res.json(list);
       }
     });
@@ -75,6 +86,7 @@ module.exports = {
       if (err) {
         res.status(500).end();
       } else {
+        pusher.trigger('list', 'lists', {message: "List successfully deleted."});
         res.status(200).end();
       }
     });

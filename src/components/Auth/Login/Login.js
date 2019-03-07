@@ -12,7 +12,7 @@ class Login extends Component {
 	};
 
 	onFailure = (error) => {
-		alert(error);
+		alert("Login failed!");
 	}
 
 	render() {
