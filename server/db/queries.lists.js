@@ -1,4 +1,5 @@
 const List = require("./models").List;
+const ListItem = require("./models").ListItem;
 const Authorizer = require("../policies/list");
 
 module.exports = {
@@ -39,7 +40,15 @@ module.exports = {
     });
 	},
 	getList(id, callback) {
-		return List.findByPk(id)
+		return List.findByPk(id, {
+      include : [{
+        model : ListItem,
+        as: 'listItems'
+     }],
+     order: [
+       [{model: ListItem, as: "listItems" }, 'isPurchased', 'ASC']
+     ]
+    })
     .then( list => {
       callback(null, list);
     })

@@ -141,7 +141,7 @@ describe("routes : lists", () => {
             done();
           })
           .catch( err => {
-            console.log(err);
+            expect(err).toBeNull();
             done();
           });
         })
@@ -179,7 +179,7 @@ describe("routes : lists", () => {
       });
     });
 
-    describe("GET /api/lists?listId=", () => {
+    describe("GET /api/lists?id=", () => {
       it("should retrieve the specified list", done => {
         axios.get(base, {
           params: {
@@ -217,7 +217,7 @@ describe("routes : lists", () => {
             done();
           })
           .catch( err => {
-            console.log(err);
+            expect(err).toBeNull();
           });
         })
         .catch( err => {

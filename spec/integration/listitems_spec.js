@@ -156,8 +156,7 @@ describe("routes : listitems", () => {
             .then( listItem => {
               this.anotherListItem = listItem;
               done();
-            });
-            done();
+            })
           });
         });
       });
@@ -259,7 +258,7 @@ describe("routes : listitems", () => {
             done();
           })
           .catch( err => {
-            console.log(err);
+            expect(err).toBeNull();
           });
         })
         .catch( err => {

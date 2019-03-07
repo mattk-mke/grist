@@ -2,6 +2,15 @@ const listItemQueries = require('../db/queries.listItems');
 const listQueries = require('../db/queries.lists');
 const Authorizer = require('../policies/listitem');
 const ListAuthorizer = require('../policies/list');
+const Pusher = require('pusher');
+
+const pusher = new Pusher({
+	appId: '727497',
+	key: process.env.PUSHER_KEY,
+	secret: process.env.PUSHER_SECRET,
+	cluster: 'us2',
+	encrypted: true
+});
 
 module.exports = {
 	listItems(req, res, next) {
@@ -36,6 +45,7 @@ module.exports = {
 						if (err) {
 							res.status(500).end();
 						} else {
+							pusher.trigger('list', 'item', {message: "Item successfully created."});
 							res.json(listItem);
 						}
 					});
@@ -70,6 +80,7 @@ module.exports = {
 			if (err || listItem == null) {
 				res.status(500).end();
 			} else {
+				pusher.trigger('list', 'item', {message: "Item successfully updated."});
 				res.json(listItem);
 			}
 		});
@@ -77,8 +88,10 @@ module.exports = {
 	destroy(req, res, next) {
     listItemQueries.deleteListItem(req.user, req.body.id, (err) => {
       if (err) {
+				console.log(err);
         res.status(500).end();
       } else {
+				pusher.trigger('list', 'item', {message: "Item succesfully deleted."});
         res.status(200).end();
       }
     });

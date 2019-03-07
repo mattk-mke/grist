@@ -37,7 +37,6 @@ module.exports = {
           token
         }, { where: { googleId: profile.id }, returning: true })
         .then( user => {
-          console.log('[strategy success]', user[0]);
           done(null, user[0]);
         })
         .catch( err => {

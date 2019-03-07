@@ -6,14 +6,11 @@ const createToken = function (auth) {
 		id: auth.id
 	}, process.env.JWT_SECRET || 'my-secret',
 		{
-			expiresIn: 60 * 120
+			expiresIn: "12h"
 		});
 };
 
 module.exports = {
-	success(req, res, next) {
-		res.redirect(`http://localhost:${process.env.PORT || '3000'}/login?token=${req.user.token}`);
-	},
 	signOut(req, res, next) {
     req.logOut();
     res.redirect("/");

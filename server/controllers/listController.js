@@ -44,6 +44,7 @@ module.exports = {
 	get(req, res, next) {
     listQueries.getList(req.query.id, (err, list) => {
       if ( err || list == null) {
+        console.log(err);
         res.status(404).end();
       } else {
 				const authorized = new Authorizer(req.user, list).show();
