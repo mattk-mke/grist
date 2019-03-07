@@ -24,7 +24,7 @@ class Login extends Component {
 			content = (
 				<GoogleLogin
 					clientId="632347726974-7i4huihhgbe271hql545uajf2jukag4o.apps.googleusercontent.com"
-					buttonText="Login"
+					buttonText="Sign in with Google"
 					onSuccess={this.googleResponse}
 					onFailure={this.onFailure}
 				/>

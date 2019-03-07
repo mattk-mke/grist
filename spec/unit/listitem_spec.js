@@ -55,7 +55,6 @@ describe("ListItem", () => {
           done();
         })
         .catch(err => {
-          console.log(err);
           done();
         });
     });

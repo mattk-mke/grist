@@ -17,7 +17,7 @@ module.exports = {
     });
 	},
   getUserLists(id, callback) {
-    return List.all({
+    return List.findAll({
       where: {
         userId: id
       }

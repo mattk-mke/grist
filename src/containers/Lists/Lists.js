@@ -52,9 +52,9 @@ class Lists extends Component {
 		let content = <Spinner />;
 		if (!this.state.loading) {
 			content = (
-			<>
-				<h1>{this.props.header}</h1>
-				<ul>
+			<div className="column is-half is-max-height">
+				<div className="box">
+					<h1 className="title">{this.props.header}</h1>
 					{this.state.lists.map( list => (
 						<ListsItem key={list.id}
 							list={list}
@@ -62,15 +62,15 @@ class Lists extends Component {
 							userId={this.props.userId}
 							deleteList={this.deleteListHandler} />
 					))}
-				</ul>
-			</>
+				</div>
+			</div>
 			);
 		}
 
 		return (
-			<div>
+			<>
 				{content}
-			</div>
+			</>
 		);
 	}
 }
@@ -78,7 +78,7 @@ class Lists extends Component {
 const mapStateToProps = (state) => {
 	return {
 		token: state.token,
-		userId: state.profile.id
+		userId: state.profile ? state.profile.id : 0
 	}
 }
 
