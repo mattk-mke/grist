@@ -24,9 +24,15 @@ const listItem = (props) => {
 		});
 	}
 
+	const priorities = {
+		low: "#4ECDC4",
+		medium: "#19D16F",
+		high: "#FF6B6B"
+	};
+
 	let content = (<>
 		<button className="control button is-small" title="Click to mark as purchased" onClick={toggleItemPurchased}
-			style={props.listItem.isPurchased ? {textDecoration: "line-through"} : null}>
+			style={{borderLeftColor: priorities[props.listItem.priority], textDecoration: props.listItem.isPurchased ? "line-through" : null }} >
 			{props.listItem.title}
 		</button>
 		<div className="control">
