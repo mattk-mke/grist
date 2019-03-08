@@ -44,8 +44,7 @@ For front-end, I ran out of time to refine it into what I had imagined. I placed
 
 4. Migrate databases
 
-`sequelize db:migrate && sequelize db:migrate`
-`sequelize db:migrate --env=test && sequelize db:migrate --env=test`
+`sequelize db:migrate && sequelize db:migrate --env=test`
 
 5. Start servers
 

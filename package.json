@@ -1,12 +1,18 @@
 {
   "name": "grist",
   "version": "0.1.0",
+  "engines": {
+    "npm": "6.8.0",
+    "node": "10.11.0",
+    "yarn": "1.13.0"
+  },
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bulma": "^0.7.4",
+    "connect-session-sequelize": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
@@ -30,14 +36,16 @@
     "react-scripts": "2.1.5",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^4.42.1"
+    "sequelize": "^4.42.1",
+    "sequelize-cli": "^5.4.0"
   },
   "scripts": {
     "start-react": "react-scripts start",
     "start": "node server/server.js",
     "build": "react-scripts build",
     "test": "export NODE_ENV=test && jasmine",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,5 +56,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:${process.env.PORT || 8080}"
 }

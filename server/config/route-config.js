@@ -22,9 +22,11 @@ module.exports = {
     }
   
     const clientPath = path.resolve(__dirname, '../../build/'); 
-		app.use(express.static(clientPath));
+    
+		app.use('/static', express.static(path.join(clientPath, 'static')));
     app.use(userRoutes);
     app.use(listRoutes);
     app.use(listItemRoutes);
+    app.get('/*', (req, res) => res.sendFile(path.join(clientPath, 'index.html')));
   }
 }

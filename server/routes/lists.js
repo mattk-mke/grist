@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const listController = require('../controllers/ListController');
+const listController = require('../controllers/listController');
 const userController = require('../controllers/userController');
 
 router.get('/api/lists/public', listController.publicLists);
