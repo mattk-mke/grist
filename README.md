@@ -49,8 +49,8 @@ For front-end, I ran out of time to refine it into what I had imagined. I placed
 
 5. Start servers
 
-`yarn start-server`
 `yarn start`
+`yarn start-react`
 
 6. Run tests?
 
